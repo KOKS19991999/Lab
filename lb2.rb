@@ -30,11 +30,11 @@ workword(word)
 
 # exercise 2
 
-
-
-def addpokemons()
-
 pokemons = []
+
+def addpokemons(pokemons)
+
+
 countpokemons = nil
 namepokemon = nil
 colorpokemon = nil
@@ -55,4 +55,4 @@ end
 puts pokemons
 end
 
-addpokemons()
+addpokemons(pokemons)
