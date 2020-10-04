@@ -23,8 +23,7 @@ while play
   puts 'Q (quit)'
   puts ''
 
-  operation = gets.to_s
-  operation = operation.upcase.chomp
+  operation = gets.chomp.upcase!
 
   case operation
   when 'D'
