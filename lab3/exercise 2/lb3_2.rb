@@ -17,7 +17,7 @@ while play
   puts "Balance: #{start_balance}"
   puts 'What do you want to do?'
   puts ''
-  puts 'D (deposit)'
+  puts 'D (deposit_amount)'
   puts 'W (withdraw)'
   puts 'B (balance)'
   puts 'Q (quit)'
@@ -28,8 +28,8 @@ while play
   case operation
   when 'D'
     puts ''
-    print 'Deposit amount: '
-    deposit_amount = gets.to_i
+    print 'deposit_amount amount: '
+    deposit_amount_amount = gets.to_i
     if deposit_amount > 0
       start_balance += deposit_amount
       File.open('balance.txt', 'w') { |f| f.write start_balance }
