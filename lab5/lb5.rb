@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 def deposit(num)
-  if num > 0
+  if num.positive?
     $start += num
-    File.open('balance.txt','w'){|f| f.write $start}
+    File.open('balance.txt', 'w') { |f| f.write $start }
   else return 'Error deposit less than 0!'
   end
   balance
 end
 
 def withdraw(num)
-  if (num > 0 && num <= $start.to_i)
+  if num.positive? && num <= $start.to_i
     $start -= num
-    File.open('balance.txt','w'){|f| f.write $start}
+    File.open('balance.txt', 'w') { |f| f.write $start }
   else return 'Mistake. The amount must be equal to or less than the balance!'
   end
   balance
@@ -29,36 +31,37 @@ def balance
 end
 
 def quit
-  "Bye"
+  'Bye'
 end
 
 def web
   require 'socket'
   server = TCPServer.open(3000)
-  while true
-    res = "HTTP/1.1 300 OK"
+  loop do
+    res = 'HTTP/1.1 300 OK'
     client = server.accept
     response = client.gets
-    method, uri = response.split(" ")
-    if method == "GET"
-      uri, num = uri.split("?")
-      if uri == "/balance"
+    method, uri = response.split(' ')
+    if method == 'GET'
+      uri, num = uri.split('?')
+      case uri
+      when '/balance'
         res = "#{res}\n\n#{balance}"
-      elsif uri == "/withdraw"
+      when '/withdraw'
         res = "#{res}\n\n#{withdraw(num.to_i)}"
-      elsif uri == "/deposit"
+      when '/deposit'
         res = "#{res}\n\n#{deposit(num.to_i)}"
-      elsif uri == "/quit"
+      when '/quit'
         res = "#{res}\n\n#{quit}"
         client.print res
-        client.close()
+        client.close
         break
       else
         res = "HTTP/1.1 404\n\nError 404"
       end
     end
     client.print res
-    client.close()
+    client.close
   end
 end
 
